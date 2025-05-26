@@ -1,0 +1,359 @@
+{
+	"info": {
+		"_postman_id": "ed273936-50ba-4b63-b330-86b7219d73c6",
+		"name": "Аттестация",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "38890597"
+	},
+	"item": [
+		{
+			"name": "добавление товара в корзину",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус-код: 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"resp_time = pm.response.responseTime\r",
+							"pm.test(\"Время ожидание ответа: \"+resp_time+\" ms (passed < 5s)\", function () {\r",
+							"    const fiveSecondsMs = 5_000; // 5 seconds in milliseconds\r",
+							"    pm.expect(resp_time).to.be.below(fiveSecondsMs);\r",
+							"});\r",
+							"pm.test(\"Тело ответа содержит id: \"+(pm.collectionVariables.get(\"prod_id\")), function () {\r",
+							"pm.expect(pm.response.json().id).to.eql(pm.collectionVariables.get(\"prod_id\"));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "ru-RU,ru;q=0.5"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded; charset=UTF-8"
+					},
+					{
+						"key": "Origin",
+						"value": "https://altaivita.ru"
+					},
+					{
+						"key": "Referer",
+						"value": "https://altaivita.ru/product/sbor-endocrinorm/"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-origin"
+					},
+					{
+						"key": "Sec-GPC",
+						"value": "1"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "X-Requested-With",
+						"value": "XMLHttpRequest"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Chromium\";v=\"136\", \"Brave\";v=\"136\", \"Not.A/Brand\";v=\"99\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "Cookie",
+						"value": "CID=f6912a102f7adf01682abe20f5e89554; site_countryID=247; site_country_name=%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B9%D1%81%D0%BA%D0%B0%D1%8F+%D0%A4%D0%B5%D0%B4%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D1%8F; _ym_uid=174775201212214325; _ym_d=1747752012; PHPSESSID=ehcj7e4ef8hg0amvh4omp5fp06; _ym_isad=1"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "action=ecom_link_products_cart&productID={{prod_id}}&LANG_key=ru&S_wh=1&S_CID=f6912a102f7adf01682abe20f5e89554&S_cur_code=rub&S_koef=1&S_hint_code=&S_customerID=",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": "{{base_url}}ajax/ajax_ecommerce/ajax_ecommerce.php"
+			},
+			"response": []
+		},
+		{
+			"name": "изменение количество товара (увеличение)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус-код: 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"resp_time = pm.response.responseTime\r",
+							"pm.test(\"Время ожидание ответа: \"+resp_time+\" ms (passed < 5s)\", function () {\r",
+							"    const fiveSecondsMs = 5_000; // 5 seconds in milliseconds\r",
+							"    pm.expect(resp_time).to.be.below(fiveSecondsMs);\r",
+							"});\r",
+							"pm.test(\"Тело ответа содержит products_amount\", function () {\r",
+							"pm.expect(pm.response.text()).to.include(\"products_amount\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded; charset=UTF-8"
+					},
+					{
+						"key": "Origin",
+						"value": "https://altaivita.ru"
+					},
+					{
+						"key": "Referer",
+						"value": "https://altaivita.ru/tag/cleansing-the-body/"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-origin"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "X-Requested-With",
+						"value": "XMLHttpRequest"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Chromium\";v=\"136\", \"Google Chrome\";v=\"136\", \"Not.A/Brand\";v=\"99\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "Cookie",
+						"value": "PHPSESSID=pvcu861fiqrgsi6olfgniljcm4; CID=ee5cf64c887cba0964de2f597c66ae84; site_countryID=247; site_country_name=%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B9%D1%81%D0%BA%D0%B0%D1%8F+%D0%A4%D0%B5%D0%B4%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D1%8F; _userGUID=0:mazn84z5:oJAmPwM1VtFp2gBPPrLSIcAEK4HqiqQb; dSesn=0fd153c8-f355-a16a-4e68-dc2dd2772b21; _dvs=0:mazn84z5:0vHC5SH0sJtlkjYHe3dKWIqIRy2pZbmO; _userGUID=0:mazn84z5:oJAmPwM1VtFp2gBPPrLSIcAEK4HqiqQb; _ym_uid=1747934761309763468; _ym_d=1747934761; _ym_isad=2; _ym_visorc=w"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "product_id={{prod_id}}&LANG_key=ru&S_wh=1&S_CID=ee5cf64c887cba0964de2f597c66ae84&S_cur_code=rub&S_koef=1&quantity=1&S_hint_code=&S_customerID=",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": "{{base_url}}cart/add_products_to_cart_from_preview.php"
+			},
+			"response": []
+		},
+		{
+			"name": "удаление товара",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус-код: 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"resp_time = pm.response.responseTime\r",
+							"pm.test(\"Время ожидание ответа: \"+resp_time+\" ms (passed < 5s)\", function () {\r",
+							"    const fiveSecondsMs = 5_000; // 5 seconds in milliseconds\r",
+							"    pm.expect(resp_time).to.be.below(fiveSecondsMs);\r",
+							"});\r",
+							"pm.test(\"Тело ответа содержит price_to_delete\", function () {\r",
+							"pm.expect(pm.response.text()).to.include(\"price_to_delete\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded; charset=UTF-8"
+					},
+					{
+						"key": "Origin",
+						"value": "https://altaivita.ru"
+					},
+					{
+						"key": "Referer",
+						"value": "https://altaivita.ru/tag/cleansing-the-body/"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-origin"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "X-Requested-With",
+						"value": "XMLHttpRequest"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Chromium\";v=\"136\", \"Google Chrome\";v=\"136\", \"Not.A/Brand\";v=\"99\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "Cookie",
+						"value": "PHPSESSID=pvcu861fiqrgsi6olfgniljcm4; CID=ee5cf64c887cba0964de2f597c66ae84; site_countryID=247; site_country_name=%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B9%D1%81%D0%BA%D0%B0%D1%8F+%D0%A4%D0%B5%D0%B4%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D1%8F; _userGUID=0:mazn84z5:oJAmPwM1VtFp2gBPPrLSIcAEK4HqiqQb; dSesn=0fd153c8-f355-a16a-4e68-dc2dd2772b21; _dvs=0:mazn84z5:0vHC5SH0sJtlkjYHe3dKWIqIRy2pZbmO; _userGUID=0:mazn84z5:oJAmPwM1VtFp2gBPPrLSIcAEK4HqiqQb; _ym_uid=1747934761309763468; _ym_d=1747934761; _ym_isad=2; _ym_visorc=w"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "product_id={{prod_id}}&LANG_key=ru&S_wh=1&S_CID=ee5cf64c887cba0964de2f597c66ae84&S_cur_code=rub&S_koef=1&S_hint_code=&S_customerID=",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": "{{base_url}}cart/delete_products_from_cart_preview.php"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://altaivita.ru/engine/",
+			"type": "string"
+		},
+		{
+			"key": "prod_id",
+			"value": "7052",
+			"type": "string"
+		}
+	]
+}

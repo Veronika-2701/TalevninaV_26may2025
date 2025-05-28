@@ -7,12 +7,15 @@ ratata = AltaiVita("https://altaivita.ru/engine/")
 
 
 @pytest.fixture()
+def prob(self):
+    self.ratata = AltaiVita("https://altaivita.ru/engine/")
+
 @allure.title("Добавление в корзину товара")
 @allure.description("Вызывает функцию,"
     "в которой валидный Request на методе Post.")
 @allure.feature("Добавление в корзину товара")
 @allure.severity("critical")
-def test_add_to_cart():
+def test_api_add_to_cart():
     with allure.step("Request"):
         PROJ_RESP = ratata.req_post(
             'ajax/ajax_ecommerce/ajax_ecommerce.php',
@@ -59,7 +62,7 @@ def test_raise_to_cart():
 def test_delete_to_cart():
     with allure.step("Request"):
         PROJ_RESP = ratata.req_post(
-            'cart/add_products_to_cart_from_preview.php',
+            'cart/delete_products_from_cart_preview.php',
             "product_id=7052&LANG_key=ru&S_wh=1&S_CID="
             "ee5cf64c887cba0964de2f597c66ae84&S_cur_code"
             "=rub&S_koef=1&S_hint_code=&S_customerID="
